@@ -1,12 +1,31 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('My Cart') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            
+            {{-- TITLE --}}
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('My Cart') }}
+            </h2>
+
+            {{-- BACK BUTTON --}}
+            <a href="{{ url()->previous() }}"
+               class="inline-flex items-center gap-2 rounded-md bg-gray-700 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-gray-600 transition">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15 19l-7-7 7-7" />
+                </svg>
+
+                Back
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+
+            {{-- SUCCESS MESSAGE --}}
             @if (session('status'))
                 <div class="mb-4 rounded-md bg-green-100 text-green-800 px-4 py-2 text-sm">
                     {{ session('status') }}
@@ -15,8 +34,10 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
                     @forelse ($items as $item)
                         <div class="flex flex-col gap-4 border-b border-gray-200 py-4 dark:border-gray-700 sm:flex-row sm:items-center sm:justify-between">
+                            
                             <div class="flex items-center gap-4">
                                 @if ($item['product']->image_path)
                                     <img
@@ -29,10 +50,10 @@
                                 <div>
                                     <p class="font-semibold">{{ $item['product']->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        P{{ number_format($item['product']->price, 2) }} each
+                                        ₱{{ number_format($item['product']->price, 2) }} each
                                     </p>
                                     <p class="text-sm font-medium mt-1">
-                                        Line total: P{{ number_format($item['lineTotal'], 2) }}
+                                        Line total: ₱{{ number_format($item['lineTotal'], 2) }}
                                     </p>
                                 </div>
                             </div>
@@ -41,6 +62,7 @@
                                 <form method="POST" action="{{ route('cart.update', $item['product']) }}" class="flex items-center gap-2">
                                     @csrf
                                     @method('PATCH')
+
                                     <input
                                         type="number"
                                         name="quantity"
@@ -48,6 +70,7 @@
                                         value="{{ $item['qty'] }}"
                                         class="w-20 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                                     >
+
                                     <button type="submit" class="rounded-md border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
                                         Update
                                     </button>
@@ -56,6 +79,7 @@
                                 <form method="POST" action="{{ route('cart.remove', $item['product']) }}">
                                     @csrf
                                     @method('DELETE')
+
                                     <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-500">
                                         Remove
                                     </button>
@@ -63,23 +87,34 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-center text-gray-500 dark:text-gray-400 py-8">Your cart is empty.</p>
+                        <p class="text-center text-gray-500 dark:text-gray-400 py-8">
+                            Your cart is empty.
+                        </p>
                     @endforelse
 
+                    {{-- TOTAL + ACTIONS --}}
                     <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <p class="text-lg font-semibold">Total: P{{ number_format($total, 2) }}</p>
+                        <p class="text-lg font-semibold">
+                            Total: ₱{{ number_format($total, 2) }}
+                        </p>
+
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('dashboard') }}" class="rounded-md border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
+                            <a href="{{ route('dashboard') }}"
+                               class="rounded-md border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
                                 Continue Shopping
                             </a>
+
                             <form method="POST" action="{{ route('cart.checkout') }}">
                                 @csrf
-                                <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-500" @disabled(empty($items))>
+                                <button type="submit"
+                                        class="rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-500"
+                                        @disabled(empty($items))>
                                     Checkout
                                 </button>
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
