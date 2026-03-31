@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProductBrowseController;
 use App\Http\Controllers\CartController;
 use App\Models\Product;
+use App\Models\Category;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,10 +25,26 @@ Route::get('/dashboard', function () {
         return redirect()->route('admin.dashboard');
     }
 
-    $products = Product::with('category')->latest()->paginate(12);
-
-    return view('dashboard', compact('products'));
+    return redirect()->route('client.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/client/dashboard', function () {
+    $productsQuery = Product::with('category')->latest();
+    $selectedCategoryId = request('category');
+
+    if (request('q')) {
+        $productsQuery->where('name', 'like', '%'.request('q').'%');
+    }
+
+    if ($selectedCategoryId) {
+        $productsQuery->where('category_id', $selectedCategoryId);
+    }
+
+    $categories = Category::orderBy('name')->get();
+    $products = $productsQuery->paginate(12)->withQueryString();
+
+    return view('client.dashboard', compact('products', 'categories', 'selectedCategoryId'));
+})->middleware(['auth', 'verified'])->name('client.dashboard');
 
 // User profile
 Route::middleware('auth')->group(function () {

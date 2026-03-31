@@ -14,15 +14,15 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans text-gray-900 antialiased bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('images/background1.jpg') }}');">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black/55">
             <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <a href="/" class="inline-flex items-center rounded-xl border-2 border-white bg-white/10 px-6 py-2 text-5xl font-black tracking-wide text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]">
+                    InstaCart
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-5 bg-white shadow-2xl border border-white/60 overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
