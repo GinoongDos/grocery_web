@@ -34,7 +34,7 @@ class ProductController extends Controller
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -60,14 +60,27 @@ class ProductController extends Controller
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
         ]);
 
-        if ($request->hasFile('image')) {
+        \Log::info('Update product request', [
+            'product_id' => $product->id,
+            'has_file' => $request->hasFile('image'),
+            'remove_image' => $request->boolean('remove_image'),
+            'file_info' => $request->file('image') ? $request->file('image')->getClientOriginalName() : null,
+        ]);
+
+        if ($request->boolean('remove_image')) {
+            if ($product->image_path && Storage::disk('public')->exists($product->image_path)) {
+                Storage::disk('public')->delete($product->image_path);
+            }
+            $data['image_path'] = null;
+        } elseif ($request->hasFile('image')) {
             if ($product->image_path && Storage::disk('public')->exists($product->image_path)) {
                 Storage::disk('public')->delete($product->image_path);
             }
             $data['image_path'] = $request->file('image')->store('products', 'public');
+            \Log::info('New image stored', ['path' => $data['image_path']]);
         }
 
         $product->update($data);

@@ -50,6 +50,12 @@
                                 alt="{{ $product->name }}"
                                 class="mb-3 h-24 w-24 rounded object-cover border border-gray-300 dark:border-gray-600"
                             >
+                            <div class="mb-3">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="remove_image" value="1" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">Remove current image</span>
+                                </label>
+                            </div>
                         @endif
                         <input id="image" name="image" type="file" accept="image/*" class="mt-1 block w-full">
                         <x-input-error :messages="$errors->get('image')" class="mt-2" />
