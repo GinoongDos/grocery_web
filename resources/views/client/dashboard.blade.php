@@ -28,7 +28,7 @@
 
             <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
                 <aside class="space-y-6">
-                    <div class="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-900/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-900/95">
+                    <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-900/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-900">
                         <div class="mb-4">
                             <h3 class="text-lg font-bold text-slate-900 dark:text-white">Categories</h3>
                             <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Filter the collection by product type.</p>
@@ -47,7 +47,7 @@
                         </nav>
                     </div>
 
-                    <div class="rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-xl shadow-slate-900/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-900/95">
+                    <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-900/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-900">
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Search Products</h3>
                         <form method="GET" action="{{ route('client.dashboard') }}" class="mt-5">
                             @if (request('category'))
@@ -76,7 +76,7 @@
                     </div>
 
                     <div>
-                        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white/90 backdrop-blur rounded-2xl p-4 shadow-lg dark:bg-slate-950/95">
                             <div>
                                 <h2 class="text-3xl font-white text-slate-900 dark:text-white">{{ $selectedCategoryId ? 'Category Products' : 'Fresh Collection' }}</h2>
                                 <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ $products->total() }} product{{ $products->total() === 1 ? '' : 's' }} found.</p>
@@ -90,7 +90,7 @@
 
                         <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                             @forelse ($products as $product)
-                                <article class="group overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-xl shadow-slate-900/5 transition hover:-translate-y-1 hover:shadow-2xl dark:border-slate-700/80 dark:bg-slate-950/95">
+                                <article class="group overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white shadow-xl shadow-slate-900/5 transition hover:-translate-y-1 hover:shadow-2xl dark:border-slate-700/80 dark:bg-slate-950">
                                     <div class="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-900">
                                         @if ($product->image_path)
                                             <img src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}" class="h-20 w-23 object-cover transition duration-500 group-hover:scale-105" />
@@ -122,7 +122,7 @@
                                     </div>
                                 </article>
                             @empty
-                                <div class="rounded-3xl border border-dashed border-slate-300 bg-white/90 p-12 text-center text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300">
+                                <div class="rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300">
                                     <div class="text-6xl">📪</div>
                                     <h3 class="mt-4 text-2xl font-black">No Products</h3>
                                     <p class="mt-2 text-sm">Fresh produce coming soon — check back later.</p>
@@ -133,7 +133,7 @@
 
                     @if ($products->hasPages())
                         <div class="flex justify-center">
-                            <div class="rounded-3xl border border-slate-200/80 bg-white/90 px-5 py-4 shadow-lg dark:border-slate-700/80 dark:bg-slate-950/95">
+                            <div class="rounded-3xl border border-slate-200/80 bg-white px-5 py-4 shadow-lg dark:border-slate-700/80 dark:bg-slate-950">
                                 {{ $products->links() }}
                             </div>
                         </div>
