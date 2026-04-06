@@ -15,9 +15,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('images/background1.jpg') }}');">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black/55">
-            <div>
-                <a href="/" class="inline-flex items-center rounded-xl border-2 border-white bg-white/10 px-6 py-2 text-5xl font-black tracking-wide text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+            <div class="rounded-full bg-black/70 px-4 py-2 mb-4">
+                <a href="/" class="inline-flex items-center rounded-full bg-white px-6 py-2 text-5xl font-black tracking-wide text-slate-900 shadow-2xl shadow-black/40 border border-slate-200">
                     InstaCart
                 </a>
             </div>

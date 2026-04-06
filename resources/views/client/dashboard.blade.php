@@ -2,7 +2,7 @@
     @php $cartCount = array_sum(session('cart', [])); @endphp
 
     <x-slot name="header">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between bg-white/90 backdrop-blur rounded-2xl p-4 shadow-lg dark:bg-slate-950/95">
             <div>
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Welcome back, {{ Auth::user()->name }}</h2>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Browse fresh produce, filter by category, and add items to your cart.</p>
