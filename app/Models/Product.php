@@ -16,10 +16,16 @@ class Product extends Model
         'description',
         'price',
         'image_path',
+        'quantity',
     ];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function isInStock(): bool
+    {
+        return $this->quantity > 0;
     }
 }

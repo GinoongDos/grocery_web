@@ -15,7 +15,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->latest()->paginate(10);
+        $query = Product::with('category');
+
+        // Apply stock filters
+        if (request('stock') === 'low') {
+            $query->where('quantity', '<=', 5)->where('quantity', '>', 0);
+        } elseif (request('stock') === 'out') {
+            $query->where('quantity', '=', 0);
+        } elseif (request('stock') === 'in') {
+            $query->where('quantity', '>', 0);
+        }
+
+        $products = $query->latest()->paginate(10);
 
         return view('admin.product.index', compact('products'));
     }
@@ -34,6 +45,7 @@ class ProductController extends Controller
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
+            'quantity' => ['required', 'integer', 'min:0'],
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
         ]);
 
@@ -60,6 +72,7 @@ class ProductController extends Controller
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
+            'quantity' => ['required', 'integer', 'min:0'],
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
         ]);
 

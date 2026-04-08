@@ -37,6 +37,12 @@
                     </div>
 
                     <div>
+                        <x-input-label for="quantity" value="Quantity" />
+                        <x-text-input id="quantity" name="quantity" type="number" min="0" class="mt-1 block w-full" required value="{{ old('quantity', $product->quantity) }}" />
+                        <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                    </div>
+
+                    <div>
                         <x-input-label for="description" value="Description" />
                         <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 rounded-md">{{ old('description', $product->description) }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
